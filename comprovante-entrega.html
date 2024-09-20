@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário Inforserv</title>
+    <style>
+      
+        @media print {
+            @page {
+                size: 80mm auto; /* Ajuste para 80mm de largura */
+                margin: 0;
+            }
+            body {
+                margin: 0;
+                padding: 0;
+                font-size: 9pt;
+                color: rgb(0, 0, 0);
+                width: 80mm; /* Garantir que o corpo tenha a largura correta */
+            }
+            .container {
+                background-color: rgb(255, 255, 255);
+                color: black;
+                width: 80mm; /* Garantir que o container tenha a largura correta */
+                box-sizing: border-box; /* Para garantir que o padding não aumente a largura */
+            }
+            .header img {
+                width: 25mm;
+                height: auto;
+                margin-right: 2mm;
+            }
+            .print-btn {
+                background-color: #000000;
+                color: white;
+            }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 80mm; /* Definir a largura do corpo como 80mm */
+            box-sizing: border-box;
+            font-size: 9pt;
+            color: black;
+        }
+        .container {
+            padding: 2mm;
+            box-sizing: border-box;
+            background-color: white;
+            width: 100%; /* Ajuste para a largura total disponível */
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2mm;
+        }
+        .header img {
+            width: 25mm;
+            height: auto;
+            margin-right: 2mm;
+        }
+       .hidden{
+        display: none !important; /*ocutar botão*/
+       }
+        .header h1 {
+            margin: 0;
+            font-size: 9pt;
+            font-weight: bold;
+        }
+
+        .company-info {
+            font-size: 8pt;
+            line-height: 1.2;
+        }
+        label {
+            display: block;
+            margin-top: 0.5mm;
+            font-size: 9pt;
+            font-weight: bold;
+            color: black;
+        }
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        input[type="email"],
+        input[type="tel"] {
+            width: calc(100% - 2mm);
+            padding: 0.5mm;
+            font-size: 9pt;
+            box-sizing: border-box;
+            margin-top: 0.5mm;
+            color: black;
+        }
+        input[type="radio"] {
+            margin-right: 1mm;
+            vertical-align: middle;
+            font-size: 9pt;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-top: 2mm;
+            font-size: 9pt;
+            color: black;
+        }
+        .sub-title {
+            font-weight: bold;
+            margin-top: 2mm;
+            font-size: 9pt;
+            color: black;
+        }
+        .print-btn,
+        .save-btn {
+            
+            margin-top: 6mm;
+            display: block;
+            width: 100%;
+            padding: 1mm;
+            background-color: #438e3d;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 2mm;
+            font-size: 9pt;
+            cursor: pointer;
+            border: none;
+        }
+        .save-btn.hidden, .print-btn.hidden{
+            display: none !important;
+        }
+        .signature-section {
+            margin-top: 6mm;
+        }
+        .signature {
+            position: relative;
+            margin-bottom: 8mm;
+        }
+        .signature-line {
+            border-top: 1px solid black;
+            width: 100%;
+            height: 6mm;
+            margin-bottom: 2mm;
+        }
+        .signature-label {
+            text-align: center;
+            font-size: 9pt;
+            position: relative;
+            top: -5mm;
+        }
+
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div class="container" id="printableArea">
+        <div class="header">
+            <!-- Use uma imagem base64 para garantir que ela seja capturada -->
+           
+            <div class="company-info">
+                <strong>Inforserv Comércio de Material de Informática Ltda-Me</strong><br />
+                <strong>CNPJ: 08.117.381/0001-03</strong><br />
+                <strong>Rua Manoel Laurentino, 1882 - Nova Porto Velho - RO</strong><br />
+                <strong>Fone: 69 3222-1887</strong>
+            </div>
+        </div>
+        <div class="info-text">
+            <strong>FICHA DE ATENDIMENTO - COMPROVANTE DE ENTREGA NÃO É DOCUMENTO FISCAL - NÃO É VÁLIDO COMO GARANTIA DE MERCADORIA - NÃO COMPROVA PAGAMENTO</strong>
+        </div>
+        <form id="inforserv-form">
+            <!-- Campos do formulário -->
+            <label for="atendente">Atendente:</label>
+            <input name="atendente" type="radio" value="Amedel" /> Amedel
+            <input name="atendente" type="radio" value="Fabio" /> Fabio
+            <input name="atendente" type="radio" value="Virlei" /> Virlei
+            <input name="atendente" type="radio" value="Outros" />
+            <input name="Nomeatendente" type="text" placeholder="" />
+
+            <label for="previsao">Previsão de Orçamento:</label>
+            <input name="previsao" type="radio" value="3 dias" /> 3 dias
+            <input name="previsao" type="radio" value="6 dias" /> 6 dias
+            <input name="previsao" type="radio" value=" uteis 22" /> Dias Úteis
+
+            <div class="sub-title">Informe a quantidade de dias:</div>
+            <input id="dias-uteis" name="dias-uteis" type="text" placeholder="" />
+
+            <label for="data-entrega">Data da Entrega:</label>
+            <input id="data-entrega" name="data-entrega" type="date" />
+
+            <label for="hora-entrega">Hora da Entrega:</label>
+            <input id="hora-entrega" name="hora-entrega" type="time" />
+
+            <div class="section-title">Identificação do Solicitante</div>
+            <label for="empresa">Empresa:</label>
+            <input id="empresa" name="empresa" type="text" />
+
+            <label for="cnpj">CNPJ:</label>
+            <input id="cnpj" name="cnpj" type="text" />
+
+            <label for="solicitante">Solicitante:</label>
+            <input id="solicitante" name="solicitante" type="text" />
+
+            <label for="celular">Celular:</label>
+            <input id="celular" name="celular" type="tel" />
+
+            <label for="email">Email:</label>
+            <input id="email" name="email" type="email" />
+
+            <div class="section-title">Identificação do Equipamento</div>
+            <label for="tipo">Tipo:</label>
+            <input name="tipo" type="radio" value="REP Eletrônico" /> REP Eletrônico
+            <input name="tipo" type="radio" value="Re. Cartográfico" /> Re. Cartográfico
+            <input name="tipo" type="radio" value="Outros" /> Outros
+
+            <label for="marca">Marca:</label>
+            <input id="marca" name="marca" type="text" />
+
+            <label for="serie">Número de Série:</label>
+            <input id="serie" name="serie" type="text" />
+
+            <label for="defeito">Defeito:</label>
+            <input id="defeito" name="defeito" type="text" />
+
+          
+        </form>
+	
+	<br><br><br>
+
+        <div class="signature-section">
+            <div class="signature">
+                <div class="signature-line"></div>
+                <div class="signature-label">
+                    <strong>Assinatura Atendente:</strong>
+		 	 			
+                </div>
+		<br><br><br>
+		
+                <div class="signature-line"></div>
+                <div class="signature-label">
+                    <strong>Assinatura Solicitante:</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+      <!-- Botões de ação -->
+      <button type="button" class="print-btn" onclick="window.print()">Imprimir</button>
+      <button type="button" class="save-btn" onclick="saveAsPDF()">Salvar como PDF</button>
+
+      <script>
+        function hideButtonsAndSave() {
+            hideButtons();
+            saveAsPDF();
+        }
+    
+        function hideButtonsAndPrint() {
+            hideButtons();
+            setTimeout(() => window.print(), 100); // Espera um pouco antes de imprimir
+        }
+    
+        function hideButtons() {
+            document.querySelector('.save-btn').classList.add('hidden'); // ADICIONADO
+            document.querySelector('.print-btn').classList.add('hidden'); // ADICIONADO
+        }
+    
+        function saveAsPDF() {
+            const { jsPDF } = window.jspdf;
+            const container = document.querySelector("#printableArea");
+    
+            html2canvas(container, {
+                scale: 2,
+                useCORS: true,
+                scrollX: 0,
+                scrollY: 0,
+                backgroundColor: 'white'
+            }).then(canvas => {
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: [80, canvas.height * 80 / canvas.width]
+                });
+    
+                const imgWidth = 80;
+                const imgHeight = canvas.height * (imgWidth / canvas.width);
+    
+                const imgData = canvas.toDataURL('image/png');
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                pdf.save('formulario_inforserv.pdf');
+            }).catch(error => {
+                console.error('Erro ao gerar o PDF:', error);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário Inforserv</title>
+    <style>
+        @media print {
+            @page {
+                size: 80mm auto;
+                margin: 0;
+            }
+            body {
+                margin: 0;
+                padding: 0;
+                font-size: 7pt;
+                color: black;
+            }
+            .container {
+                background-color: white;
+                color: black;
+            }
+            .header img {
+                width: 25mm;
+                height: auto;
+                margin-right: 2mm;
+            }
+            .print-btn {
+                background-color: #4CAF50;
+                color: white;
+            }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 80mm;
+            box-sizing: border-box;
+            font-size: 7pt;
+            color: black;
+        }
+        .container {
+            padding: 2mm;
+            box-sizing: border-box;
+            background-color: white;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2mm;
+        }
+        .header img {
+            width: 25mm;
+            height: auto;
+            margin-right: 2mm;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 8pt;
+            font-weight: bold;
+        }
+        .company-info {
+            font-size: 6pt;
+            line-height: 1.2;
+        }
+        label {
+            display: block;
+            margin-top: 0.5mm;
+            font-size: 6pt;
+            font-weight: bold;
+            color: black;
+        }
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        input[type="email"],
+        input[type="tel"] {
+            width: calc(100% - 2mm);
+            padding: 0.5mm;
+            font-size: 6pt;
+            box-sizing: border-box;
+            margin-top: 0.5mm;
+            color: black;
+        }
+        input[type="radio"] {
+            margin-right: 1mm;
+            vertical-align: middle;
+            font-size: 6pt;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-top: 2mm;
+            font-size: 7pt;
+            color: black;
+        }
+        .print-btn,
+        .save-btn {
+            margin-top: 6mm;
+            display: block;
+            width: 100%;
+            padding: 1mm;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 2mm;
+            font-size: 7pt;
+            cursor: pointer;
+            border: none;
+        }
+        .signature-section {
+            margin-top: 6mm;
+        }
+        .signature {
+            position: relative;
+            margin-bottom: 8mm;
+        }
+        .signature-line {
+            border-top: 1px solid black;
+            width: 100%;
+            height: 6mm;
+            margin-bottom: 2mm;
+        }
+        .signature-label {
+            text-align: center;
+            font-size: 6pt;
+            position: relative;
+            top: -5mm;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div class="container" id="printableArea">
+        <div class="header">
+            <img src="\\10.0.0.239\dados\Artes\INFORSERV_MATRIZES\INFORSERV_MATRIZES\matriz_com_efeitos.jpg" alt="Logo Inforserv" />
+            <div class="company-info">
+                <strong>Inforserv Comércio de Material de Informática Ltda-Me</strong><br />
+                <strong>CNPJ: 08.117.381/0001-03</strong><br />
+                <strong>Rua Manoel Laurentino, 1882 - Nova Porto Velho - RO</strong><br />
+                <strong>Fone: 69 3222-1887</strong>
+            </div>
+        </div>
+        <div class="info-text">
+            <strong>FICHA DE ATENDIMENTO - COMPROVANTE DE ENTREGA NÃO É DOCUMENTO FISCAL - NÃO É VÁLIDO COMO GARANTIA DE MERCADORIA - NÃO COMPROVA PAGAMENTO</strong>
+        </div>
+        <form id="inforserv-form">
+            <!-- Campos do formulário -->
+            <label for="atendente">Atendente:</label>
+            <input name="atendente" type="radio" value="Amedel" /> Amedel
+            <input name="atendente" type="radio" value="Fabio" /> Fabio
+            <input name="atendente" type="radio" value="Virlei" /> Virlei
+            <input name="atendente" type="radio" value="Outros" />
+            <input name="Nomeatendente" type="text" placeholder="Nome atendente: " />
+
+            <label for="previsao">Previsão de Orçamento:</label>
+            <input name="previsao" type="radio" value="3 dias" /> 3 dias
+            <input name="previsao" type="radio" value="6 dias" /> 6 dias
+            <input name="previsao" type="radio" value="uteis" /> Dias Úteis
+            <input name="dias-uteis" type="text" placeholder="Informe a quantidade de dias" />
+
+            <label for="data-entrega">Data da Entrega:</label>
+            <input id="data-entrega" name="data-entrega" type="date" />
+
+            <label for="hora-entrega">Hora da Entrega:</label>
+            <input id="hora-entrega" name="hora-entrega" type="time" />
+
+            <div class="section-title">Identificação do Solicitante</div>
+            <label for="empresa">Empresa:</label>
+            <input id="empresa" name="empresa" type="text" />
+
+            <label for="cnpj">CNPJ:</label>
+            <input id="cnpj" name="cnpj" type="text" />
+
+            <label for="solicitante">Solicitante:</label>
+            <input id="solicitante" name="solicitante" type="text" />
+
+            <label for="celular">Celular:</label>
+            <input id="celular" name="celular" type="tel" />
+
+            <label for="email">Email:</label>
+            <input id="email" name="email" type="email" />
+
+            <div class="section-title">Identificação do Equipamento</div>
+            <label for="tipo">Tipo:</label>
+            <input name="tipo" type="radio" value="REP Eletrônico" /> REP Eletrônico
+            <input name="tipo" type="radio" value="Re. Cartográfico" /> Re. Cartográfico
+            <input name="tipo" type="radio" value="Outros" /> Outros
+
+            <label for="marca">Marca:</label>
+            <input id="marca" name="marca" type="text" />
+
+            <label for="serie">Número de Série:</label>
+            <input id="serie" name="serie" type="text" />
+
+            <label for="defeito">Defeito:</label>
+            <input id="defeito" name="defeito" type="text" />
+
+            <!-- Botões de ação -->
+            <button type="button" class="print-btn" onclick="window.print()">Imprimir</button>
+            <button type="button" class="save-btn" onclick="saveAsPDF()">Salvar como PDF</button>
+        </form>
+
+        <div class="signature-section">
+            <div class="signature">
+                <div class="signature-line"></div>
+                <div class="signature-label">
+                    <strong>Assinatura Atendente:</strong
